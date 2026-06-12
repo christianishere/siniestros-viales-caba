@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TP Final – Siniestros Viales CABA</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --az:#0D2A47;--az2:#123A62;--cel:#1565C0;--tur:#00A6A6;--na:#E65100;--ro:#C62828;--vd:#2E7D32;
+  --bg:#F1F5F9;--card:#FFFFFF;--txt:#243447;--mut:#64748B;--lt:#E7EEF6;
+  --fs-xs:13px;--fs-sm:15px;--fs-md:17px;--fs-lg:21px;--fs-xl:27px;--fs-2xl:36px;--fs-kpi:48px;--fs-cover:56px
+}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--az);color:var(--txt)}
+.deck{width:100vw;height:100vh;position:relative}.slide{position:absolute;inset:0;display:none;flex-direction:column;background:var(--bg)}.slide.on{display:flex}
+.nav{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);display:flex;gap:10px;align-items:center;z-index:9999;background:rgba(5,15,30,.88);backdrop-filter:blur(10px);padding:9px 22px;border-radius:44px;box-shadow:0 4px 24px rgba(0,0,0,.45)}
+.nav button{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);color:#fff;padding:8px 18px;border-radius:44px;cursor:pointer;font-size:14px;font-weight:700}.nav button:hover:not(:disabled){background:rgba(255,255,255,.2)}.nav button:disabled{opacity:.28;cursor:default}#ctr{color:#c8d7e6;font-size:13px;min-width:50px;text-align:center;font-weight:800}.dots{display:flex;gap:6px}.dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.3);cursor:pointer}.dot.on{background:#fff;transform:scale(1.4)}
+.hdr{background:var(--az);color:#fff;padding:14px 30px 12px;flex-shrink:0;display:flex;align-items:center;gap:14px;border-bottom:3px solid rgba(255,255,255,.08)}.mark{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,var(--cel),var(--tur));display:flex;align-items:center;justify-content:center;font-weight:900;font-size:19px;box-shadow:0 4px 12px rgba(0,0,0,.2)}.hdr h2{font-size:var(--fs-xl);font-weight:800;line-height:1.2;letter-spacing:-.3px}.hdr p{font-size:var(--fs-xs);color:#98B4CE;margin-top:3px}.badge{display:inline-block;padding:3px 10px;border-radius:44px;font-size:11px;font-weight:900;color:#fff;margin-left:10px;letter-spacing:.6px;text-transform:uppercase;vertical-align:middle;background:var(--cel)}
+.ftr{background:var(--az);color:#8CA9C2;font-size:var(--fs-xs);padding:6px 30px;flex-shrink:0;display:flex;align-items:center;gap:10px;border-top:1px solid rgba(255,255,255,.07)}.body{flex:1;min-height:0;overflow:hidden}.g2{display:grid;grid-template-columns:1fr 1fr;gap:18px;padding:18px 30px;height:100%}.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:18px 30px;height:100%}.g14{display:grid;grid-template-columns:1fr 360px;gap:18px;padding:18px 30px;height:100%}.g41{display:grid;grid-template-columns:360px 1fr;gap:18px;padding:18px 30px;height:100%}.gc{display:flex;flex-direction:column;gap:14px;min-height:0}.card{background:var(--card);border-radius:13px;padding:18px 20px;box-shadow:0 2px 12px rgba(15,23,42,.08)}.ct{font-size:var(--fs-xs);font-weight:900;color:#6A7F99;margin-bottom:12px;text-transform:uppercase;letter-spacing:.7px}.ins{border-radius:13px;padding:16px 18px;font-size:var(--fs-md);line-height:1.6;color:#fff}.ins b{color:#FFE1A6}.ins.bl{background:var(--az)}.ins.gn{background:var(--vd)}.ins.or{background:var(--na)}.ins.re{background:var(--ro)}.ins.lt{background:#E9F1FA;color:var(--txt)}.ins.lt b{color:var(--cel)}
+.kpi{background:#fff;border-radius:13px;padding:18px 18px;text-align:center;box-shadow:0 2px 12px rgba(15,23,42,.08);border-top:5px solid var(--cel)}.kpi.or{border-color:var(--na)}.kpi.ro{border-color:var(--ro)}.kpi.vd{border-color:var(--vd)}.kv{font-size:var(--fs-kpi);font-weight:900;color:var(--az);line-height:1}.ku{font-size:var(--fs-xs);color:var(--mut);margin-top:4px;text-transform:uppercase;letter-spacing:.6px;font-weight:800}.kl{font-size:var(--fs-md);color:var(--txt);margin-top:7px;font-weight:700}.cover{align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;background:var(--az)}.cover:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 20% 20%,rgba(21,101,192,.45),transparent 32%),radial-gradient(circle at 80% 30%,rgba(0,166,166,.35),transparent 30%),linear-gradient(150deg,#061A2F 0%,#0D2A47 55%,#09233D 100%)}.cover:after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px, transparent 1px);background-size:44px 44px;opacity:.35}.cover-content{position:relative;z-index:2;padding:0 80px}.ctag{display:inline-block;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.22);color:#bdd2e4;padding:7px 22px;border-radius:44px;font-size:var(--fs-xs);letter-spacing:.9px;text-transform:uppercase;margin-bottom:20px;font-weight:800}.ctit{font-size:var(--fs-cover);font-weight:900;color:#fff;line-height:1.05;margin-bottom:14px;letter-spacing:-1.6px}.csub{font-size:var(--fs-lg);color:#9CB9D3;margin-bottom:24px;font-weight:500}.cline{width:62px;height:4px;background:var(--na);border-radius:2px;margin:0 auto 24px}.cmeta{font-size:var(--fs-md);color:#B8CCDE;line-height:1.9}.cpills{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap;justify-content:center}.pill{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);color:#D8E5EF;padding:7px 18px;border-radius:44px;font-size:var(--fs-sm);font-weight:700}.flow{display:flex;align-items:center;justify-content:center;gap:16px;margin:10px 0}.node{background:#fff;border:2px solid #D7E3EF;border-radius:16px;padding:18px 24px;text-align:center;min-width:145px;box-shadow:0 2px 10px rgba(15,23,42,.08)}.node b{display:block;font-size:var(--fs-lg);color:var(--az)}.node span{display:block;font-size:var(--fs-xs);color:var(--mut);margin-top:4px}.arr{font-size:34px;color:var(--cel);font-weight:900}.barrow{display:flex;align-items:center;gap:12px;margin-bottom:10px}.barlab{width:155px;text-align:right;font-size:15px;font-weight:700;color:var(--az);flex-shrink:0}.barwrap{flex:1;background:#E5ECF4;border-radius:8px;height:33px;overflow:hidden}.bar{height:100%;background:linear-gradient(90deg,var(--cel),#3C91E6);border-radius:8px;color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;padding-left:12px;min-width:38px}.bar.or{background:linear-gradient(90deg,var(--na),#F57C00)}.bar.ro{background:linear-gradient(90deg,var(--ro),#E53935)}.bar.vd{background:linear-gradient(90deg,var(--vd),#43A047)}.table{width:100%;border-collapse:collapse;font-size:var(--fs-sm);overflow:hidden;border-radius:12px}.table thead tr{background:var(--az);color:#fff}.table th,.table td{padding:11px 13px;text-align:left}.table tbody tr:nth-child(even){background:#F1F5F9}.table tbody td{color:var(--txt);border-bottom:1px solid #E2E8F0}.ok{font-weight:900;color:var(--vd)}.warn{font-weight:900;color:var(--na)}.mini{font-size:var(--fs-sm);color:var(--mut);line-height:1.6}.list{display:flex;flex-direction:column;gap:10px}.li{display:flex;gap:12px;align-items:flex-start;background:#fff;border-radius:12px;padding:14px 16px;box-shadow:0 2px 10px rgba(15,23,42,.06)}.num{width:30px;height:30px;border-radius:50%;background:var(--cel);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;flex-shrink:0}.lit{font-size:var(--fs-md);font-weight:800;color:var(--az)}.lid{font-size:var(--fs-sm);color:var(--mut);line-height:1.55;margin-top:2px}.dbgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:6px}.db{background:#fff;border-radius:13px;padding:18px;box-shadow:0 2px 10px rgba(15,23,42,.08);border-left:5px solid var(--cel)}.db b{font-size:var(--fs-md);color:var(--az)}.db .n{font-size:34px;font-weight:900;color:var(--cel);margin:8px 0 2px}.db p{font-size:var(--fs-sm);color:var(--mut);line-height:1.45}.bigquote{font-size:28px;line-height:1.35;color:#fff;font-weight:800}.smallcaps{font-size:12px;text-transform:uppercase;letter-spacing:.8px;color:#94AFC8;font-weight:900;margin-bottom:10px}
+@media print{.nav{display:none}.slide{display:flex;position:relative;page-break-after:always;height:100vh}.slide:not(.on){display:flex}}
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+<div class="slide cover on" id="s1">
+  <div class="cover-content">
+    <div class="ctag">Trabajo Final · Programación Avanzada para Ciencia de Datos</div>
+    <div class="ctit">Predicción de Siniestros<br>Viales Fatales en CABA</div>
+    <div class="csub">Pipeline completo de Ciencia de Datos: datos, ETL, EDA, modelado y persistencia</div>
+    <div class="cline"></div>
+    <div class="cmeta">Licenciatura en Ciencia de Datos · 1er Semestre 2026</div>
+    <div class="cmeta" style="font-size:15px;color:#7EA0BC;margin-top:4px">Christian Lucero · [Completar integrantes]</div>
+    <div class="cpills"><div class="pill">Python</div><div class="pill">scikit-learn</div><div class="pill">SQLite</div><div class="pill">GitHub</div></div>
+  </div>
+</div>
+
+<div class="slide" id="s2">
+  <div class="hdr"><div class="mark">01</div><div><h2>Problema, datos y objetivo <span class="badge">Consigna</span></h2><p>El foco de la defensa es evidenciar el proceso de construcción del modelo, técnicas utilizadas y resultados obtenidos.</p></div></div>
+  <div class="body g2">
+    <div class="gc">
+      <div class="ins bl"><b>Objetivo:</b> construir un modelo en Python capaz de estimar la probabilidad de que un siniestro vial tenga víctimas fatales.</div>
+      <div class="card">
+        <div class="ct">Datasets utilizados</div>
+        <table class="table"><thead><tr><th>Tabla</th><th>Unidad</th><th>Registros</th></tr></thead><tbody><tr><td>HECHOS</td><td>1 fila = 1 siniestro</td><td><b>65.818</b></td></tr><tr><td>VÍCTIMAS</td><td>1 fila = 1 víctima</td><td><b>75.193</b></td></tr></tbody></table>
+      </div>
+      <div class="ins lt"><b>Decisión metodológica clave:</b> la unidad de análisis del modelo es el siniestro, no la víctima individual.</div>
+    </div>
+    <div class="gc">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div class="kpi"><div class="kv">65.818</div><div class="ku">siniestros</div><div class="kl">dataset analítico final</div></div>
+        <div class="kpi or"><div class="kv">689</div><div class="ku">fatales</div><div class="kl">clase positiva</div></div>
+        <div class="kpi vd"><div class="kv">98,95%</div><div class="ku">no fatales</div><div class="kl">clase mayoritaria</div></div>
+        <div class="kpi ro"><div class="kv">1,05%</div><div class="ku">fatales</div><div class="kl">fuerte desbalance</div></div>
+      </div>
+      <div class="ins re"><b>Implicancia:</b> Accuracy no puede ser la métrica principal porque el problema está fuertemente desbalanceado.</div>
+    </div>
+  </div>
+  <div class="ftr">TP Final · Siniestros Viales CABA · Fuente: datasets públicos GCBA 2019–2025</div>
+</div>
+
+<div class="slide" id="s3">
+  <div class="hdr"><div class="mark">02</div><div><h2>ETL y construcción del dataset analítico <span class="badge">Proceso</span></h2><p>Integración, limpieza, variables derivadas y prevención de fuga de información.</p></div></div>
+  <div class="body g41">
+    <div class="gc">
+      <div class="card"><div class="ct">Resultado del ETL</div><div class="kpi" style="box-shadow:none;border-top-color:var(--tur)"><div class="kv">17</div><div class="ku">variables finales</div><div class="kl">a nivel siniestro</div></div></div>
+      <div class="ins lt"><b>Variable objetivo:</b><br><code>siniestro_fatal</code><br>1 = al menos una víctima mortal<br>0 = sin víctimas mortales</div>
+    </div>
+    <div class="gc">
+      <div class="card" style="flex:1;display:flex;flex-direction:column;justify-content:center">
+        <div class="ct">Flujo de construcción</div>
+        <div class="flow"><div class="node"><b>HECHOS</b><span>65.818 filas</span></div><div class="arr">+</div><div class="node"><b>VÍCTIMAS</b><span>75.193 filas</span></div></div>
+        <div class="flow"><div class="arr">↓</div></div>
+        <div class="flow"><div class="node" style="min-width:240px;border-color:var(--tur)"><b>ETL</b><span>tipos · agregaciones · limpieza</span></div></div>
+        <div class="flow"><div class="arr">↓</div></div>
+        <div class="flow"><div class="node" style="min-width:280px;border-color:var(--na)"><b>Dataset analítico</b><span>1 fila = 1 siniestro</span></div></div>
+      </div>
+      <div class="list" style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div class="li"><div class="num">1</div><div><div class="lit">Integración</div><div class="lid">Relación 1:N entre hechos y víctimas mediante <code>id_siniestro</code>.</div></div></div>
+        <div class="li"><div class="num">2</div><div><div class="lit">Variables derivadas</div><div class="lid">Edad promedio, sexo agregado, día de semana y objetivo binario.</div></div></div>
+        <div class="li"><div class="num">3</div><div><div class="lit">Calidad</div><div class="lid">Conversión de tipos, normalización de categorías y revisión de faltantes.</div></div></div>
+        <div class="li"><div class="num">4</div><div><div class="lit">Sin leakage</div><div class="lid">Exclusión de variables consecuencia del siniestro.</div></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="ftr">ETL · Dataset final: 65.818 registros y 17 variables</div>
+</div>
+
+<div class="slide" id="s4">
+  <div class="hdr"><div class="mark">03</div><div><h2>EDA: patrones relevantes para el modelo <span class="badge">Visualización</span></h2><p>El EDA se utilizó para comprender el problema y orientar decisiones de modelado.</p></div></div>
+  <div class="body g2">
+    <div class="card">
+      <div class="ct">Tasa de fatalidad por horario</div>
+      <div class="barrow"><div class="barlab">03:00</div><div class="barwrap"><div class="bar ro" style="width:100%">5,71%</div></div></div>
+      <div class="barrow"><div class="barlab">04:00</div><div class="barwrap"><div class="bar ro" style="width:88.7%">5,07%</div></div></div>
+      <div class="barrow"><div class="barlab">05:00</div><div class="barwrap"><div class="bar or" style="width:72%">4,11%</div></div></div>
+      <div class="barrow"><div class="barlab">06:00</div><div class="barwrap"><div class="bar or" style="width:42.6%">2,43%</div></div></div>
+      <div class="barrow"><div class="barlab">07:00</div><div class="barwrap"><div class="bar" style="width:35.8%">2,05%</div></div></div>
+      <div class="ins lt" style="margin-top:14px"><b>Hallazgo:</b> la madrugada concentra las tasas relativas más altas de fatalidad. Esto justificó luego la variable <code>franja_horaria</code>.</div>
+    </div>
+    <div class="card">
+      <div class="ct">Combinaciones de participantes con mayor fatalidad</div>
+      <div class="barrow"><div class="barlab">PEATÓN-CAMIÓN</div><div class="barwrap"><div class="bar ro" style="width:100%">9,23%</div></div></div>
+      <div class="barrow"><div class="barlab">MOTO-OBJETO FIJO</div><div class="barwrap"><div class="bar ro" style="width:88%">8,13%</div></div></div>
+      <div class="barrow"><div class="barlab">PEATÓN-TRANSP. PÚB.</div><div class="barwrap"><div class="bar or" style="width:86.5%">7,99%</div></div></div>
+      <div class="barrow"><div class="barlab">MOTO-CAMIÓN</div><div class="barwrap"><div class="bar or" style="width:67.6%">6,24%</div></div></div>
+      <div class="barrow"><div class="barlab">BICICLETA-CAMIÓN</div><div class="barwrap"><div class="bar" style="width:62.9%">5,81%</div></div></div>
+      <div class="ins lt" style="margin-top:14px"><b>Conclusión:</b> las variables de participantes y contraparte tienen fuerte potencial predictivo y sentido interpretativo.</div>
+    </div>
+  </div>
+  <div class="ftr">EDA · Visualizaciones con Python · Hallazgos usados como soporte, no como fin principal del trabajo</div>
+</div>
+
+<div class="slide" id="s5">
+  <div class="hdr"><div class="mark">04</div><div><h2>Modelado predictivo <span class="badge">scikit-learn</span></h2><p>El problema se abordó como clasificación binaria por la naturaleza de la variable objetivo y las métricas solicitadas.</p></div></div>
+  <div class="body g2">
+    <div class="gc">
+      <div class="ins bl"><b>Pipeline de modelado:</b> imputación de faltantes + One Hot Encoding + ColumnTransformer + estimador dentro de Pipeline para evitar fuga de información.</div>
+      <div class="card">
+        <div class="ct">Modelos evaluados</div>
+        <table class="table"><thead><tr><th>Modelo</th><th>Accuracy</th><th>Precision</th><th>Recall</th><th>F1</th></tr></thead><tbody>
+          <tr><td>Dummy Classifier</td><td>0,9895</td><td>0,0000</td><td>0,0000</td><td>0,0000</td></tr>
+          <tr><td>Logistic Regression</td><td>0,8677</td><td>0,0579</td><td>0,7609</td><td>0,1076</td></tr>
+          <tr><td>Decision Tree optimizado</td><td>0,9672</td><td>0,1070</td><td>0,2899</td><td>0,1562</td></tr>
+          <tr><td><b>Random Forest optimizado</b></td><td><b>0,9808</b></td><td><b>0,1714</b></td><td><b>0,2174</b></td><td><b>0,1917</b></td></tr>
+        </tbody></table>
+      </div>
+    </div>
+    <div class="gc">
+      <div class="card" style="flex:1">
+        <div class="ct">Comparación por F1-Score</div>
+        <div class="barrow"><div class="barlab">Random Forest</div><div class="barwrap"><div class="bar vd" style="width:100%">0,1917</div></div></div>
+        <div class="barrow"><div class="barlab">Decision Tree</div><div class="barwrap"><div class="bar" style="width:81.5%">0,1562</div></div></div>
+        <div class="barrow"><div class="barlab">Logistic Reg.</div><div class="barwrap"><div class="bar or" style="width:56.1%">0,1076</div></div></div>
+        <div class="barrow"><div class="barlab">Dummy</div><div class="barwrap"><div class="bar ro" style="width:4%">0,0000</div></div></div>
+      </div>
+      <div class="ins or"><b>Criterio de selección:</b> se priorizó F1 de la clase fatal, complementado con Recall y Precision. Accuracy se informó, pero no se usó como métrica principal.</div>
+      <div class="ins lt"><b>Modelo base seleccionado:</b> Random Forest optimizado, por ofrecer el mejor equilibrio entre detección de la clase minoritaria y control de falsos positivos.</div>
+    </div>
+  </div>
+  <div class="ftr">Modelado · Pipelines, GridSearchCV, métricas de clasificación y validación estratificada</div>
+</div>
+
+<div class="slide" id="s6">
+  <div class="hdr"><div class="mark">05</div><div><h2>Fase 4B: experimentación y modelo final <span class="badge">Validación</span></h2><p>Se evaluó si modelos más complejos o una mejor representación temporal mejoraban el desempeño.</p></div></div>
+  <div class="body g2">
+    <div class="card">
+      <div class="ct">Modelos avanzados sobre variables base</div>
+      <table class="table"><thead><tr><th>Modelo</th><th>Precision</th><th>Recall</th><th>F1</th></tr></thead><tbody>
+        <tr><td>RF Oficial comparable</td><td>0,1320</td><td>0,2391</td><td><b>0,1701</b></td></tr>
+        <tr><td>Balanced RF</td><td>0,0679</td><td>0,7681</td><td>0,1247</td></tr>
+        <tr><td>SMOTE + RF</td><td>0,4000</td><td>0,0435</td><td>0,0784</td></tr>
+        <tr><td>XGBoost</td><td>0,0951</td><td>0,5870</td><td>0,1636</td></tr>
+      </tbody></table>
+      <div class="ins lt" style="margin-top:14px"><b>Resultado:</b> mayor complejidad algorítmica no superó de manera consistente al Random Forest.</div>
+    </div>
+    <div class="gc">
+      <div class="card" style="flex:1">
+        <div class="ct">Feature Engineering temporal</div>
+        <div class="barrow"><div class="barlab">RF Oficial</div><div class="barwrap"><div class="bar" style="width:89.6%">F1 0,1701</div></div></div>
+        <div class="barrow"><div class="barlab">RF + FE temporal</div><div class="barwrap"><div class="bar vd" style="width:100%">F1 0,1898</div></div></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px">
+          <div class="kpi vd"><div class="kv">+0,0197</div><div class="ku">Delta F1</div><div class="kl">semilla 42</div></div>
+          <div class="kpi"><div class="kv">4/5</div><div class="ku">semillas</div><div class="kl">mejoró el F1</div></div>
+        </div>
+      </div>
+      <div class="ins gn"><b>Modelo final:</b> Random Forest con Feature Engineering temporal (<code>franja_horaria</code> y <code>tipo_dia</code>).</div>
+      <div class="ins lt"><b>Aprendizaje:</b> en este caso aportó más valor representar mejor las variables que aumentar la complejidad del algoritmo.</div>
+    </div>
+  </div>
+  <div class="ftr">Fase 4B · Balanced RF, SMOTE + RF, XGBoost y Feature Engineering temporal</div>
+</div>
+
+<div class="slide" id="s7">
+  <div class="hdr"><div class="mark">06</div><div><h2>Persistencia en base de datos <span class="badge">SQLite</span></h2><p>La base relacional almacena datos de entrada, resultados, métricas y predicciones del modelo final.</p></div></div>
+  <div class="body" style="padding:22px 30px">
+    <div class="ins bl"><b>Objetivo:</b> cumplir la consigna de almacenamiento y dejar trazabilidad de los datos utilizados y los resultados obtenidos.</div>
+    <div class="dbgrid">
+      <div class="db"><b>siniestros_modelado</b><div class="n">65.818</div><p>Dataset limpio y preparado para modelado.</p></div>
+      <div class="db"><b>resultados_modelos</b><div class="n">18</div><p>Métricas de modelos base, avanzados y validaciones.</p></div>
+      <div class="db"><b>predicciones_modelo_final</b><div class="n">13.164</div><p>Valor real, predicción y probabilidad estimada.</p></div>
+    </div>
+    <div class="card" style="margin-top:18px">
+      <div class="ct">Diseño adoptado</div>
+      <div class="flow"><div class="node"><b>Notebooks</b><span>generan artefactos</span></div><div class="arr">→</div><div class="node"><b>CSV</b><span>resultados intermedios</span></div><div class="arr">→</div><div class="node"><b>SQLite</b><span>persistencia final</span></div></div>
+    </div>
+    <div class="ins lt" style="margin-top:18px"><b>Decisión:</b> la base de datos funciona como capa de persistencia y auditoría de resultados, sin duplicar la lógica de entrenamiento de los notebooks.</div>
+  </div>
+  <div class="ftr">Base de datos · SQLite · Tablas de entrada, resultados y predicciones</div>
+</div>
+
+<div class="slide" id="s8">
+  <div class="hdr"><div class="mark">07</div><div><h2>Conclusiones, limitaciones y mejoras futuras <span class="badge">Defensa</span></h2><p>Lecciones aprendidas y próximos pasos posibles.</p></div></div>
+  <div class="body g2">
+    <div class="gc">
+      <div class="ins gn"><b>Conclusión principal:</b> se construyó un flujo completo de Ciencia de Datos, desde datos públicos hasta modelo predictivo y persistencia en base de datos.</div>
+      <div class="list">
+        <div class="li"><div class="num">1</div><div><div class="lit">Patrones identificables</div><div class="lid">Variables temporales, geográficas y de participantes aportan información relevante.</div></div></div>
+        <div class="li"><div class="num">2</div><div><div class="lit">Modelo defendible</div><div class="lid">Random Forest con Feature Engineering temporal fue la solución final seleccionada.</div></div></div>
+        <div class="li"><div class="num">3</div><div><div class="lit">Evaluación responsable</div><div class="lid">Se priorizó F1 por el desbalance extremo de clases.</div></div></div>
+      </div>
+    </div>
+    <div class="gc">
+      <div class="card"><div class="ct">Limitaciones</div><div class="mini">• Clase fatal muy minoritaria.<br>• Información limitada a variables presentes en los datasets públicos.<br>• No se incorporaron clima, tránsito, infraestructura vial ni contexto urbano externo.<br>• El modelo debe interpretarse como apoyo analítico, no como herramienta operativa automática.</div></div>
+      <div class="card"><div class="ct">Trabajo futuro</div><div class="mini">• Incorporar variables climáticas y de infraestructura.<br>• Profundizar ingeniería geográfica.<br>• Explorar calibración de probabilidades y umbrales de decisión.<br>• Integrar visualizaciones externas o dashboard de consulta.</div></div>
+      <div class="ins bl"><div class="smallcaps">Cierre</div><div class="bigquote">La mejora más sólida no vino de hacer el modelo más complejo, sino de representar mejor el problema.</div></div>
+    </div>
+  </div>
+  <div class="ftr">Conclusiones · Limitaciones · Trabajo futuro</div>
+</div>
+
+<div class="slide cover" id="s9">
+  <div class="cover-content">
+    <div class="ctag">Trabajo Final · Programación Avanzada para Ciencia de Datos</div>
+    <div class="ctit">Gracias</div>
+    <div class="csub">¿Preguntas?</div>
+    <div class="cline"></div>
+    <div class="cmeta">Repositorio GitHub · Base SQLite · Notebooks · Presentación</div>
+  </div>
+</div>
+
+</div>
+<div class="nav">
+  <button id="prev">←</button><span id="ctr">1 / 9</span><div class="dots" id="dots"></div><button id="next">→</button>
+</div>
+<script>
+const slides=[...document.querySelectorAll('.slide')];let idx=0;const ctr=document.getElementById('ctr'),dots=document.getElementById('dots');
+slides.forEach((_,i)=>{const d=document.createElement('div');d.className='dot'+(i===0?' on':'');d.onclick=()=>show(i);dots.appendChild(d)});
+function show(i){idx=Math.max(0,Math.min(slides.length-1,i));slides.forEach((s,j)=>s.classList.toggle('on',j===idx));document.querySelectorAll('.dot').forEach((d,j)=>d.classList.toggle('on',j===idx));ctr.textContent=(idx+1)+' / '+slides.length;document.getElementById('prev').disabled=idx===0;document.getElementById('next').disabled=idx===slides.length-1;}
+document.getElementById('prev').onclick=()=>show(idx-1);document.getElementById('next').onclick=()=>show(idx+1);
+document.addEventListener('keydown',e=>{if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();show(idx+1)} if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();show(idx-1)} if(e.key==='Home')show(0); if(e.key==='End')show(slides.length-1);});
+show(0);
+</script>
+</body>
+</html>

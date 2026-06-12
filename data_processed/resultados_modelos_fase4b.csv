@@ -1,0 +1,15 @@
+fase,experimento,modelo,semilla,accuracy,precision,recall,f1_score,es_modelo_final
+Fase 4B,Modelos avanzados,Balanced RF,42,0.886964448495898,0.0678617157490397,0.7681159420289855,0.12470588235294118,0
+Fase 4B,Modelos avanzados,SMOTE + Random Forest,42,0.9892889699179581,0.4,0.043478260869565216,0.0784313725490196,0
+Fase 4B,Modelos avanzados,XGBoost,42,0.9371011850501367,0.09507042253521127,0.5869565217391305,0.16363636363636364,0
+Fase 4B,Feature Engineering temporal,Random Forest + Feature Engineering temporal,42,0.9734123366757824,0.13945578231292516,0.2971014492753623,0.18981481481481483,1
+Fase 4B,Validación multisemilla,Random Forest oficial,42,,,,0.1701,0
+Fase 4B,Validación multisemilla,Random Forest oficial,7,,,,0.2434,0
+Fase 4B,Validación multisemilla,Random Forest oficial,123,,,,0.2228,0
+Fase 4B,Validación multisemilla,Random Forest oficial,2025,,,,0.2537,0
+Fase 4B,Validación multisemilla,Random Forest oficial,999,,,,0.2494,0
+Fase 4B,Validación multisemilla,Random Forest + Feature Engineering temporal,42,,,,0.1898,1
+Fase 4B,Validación multisemilla,Random Forest + Feature Engineering temporal,7,,,,0.2379,1
+Fase 4B,Validación multisemilla,Random Forest + Feature Engineering temporal,123,,,,0.2419,1
+Fase 4B,Validación multisemilla,Random Forest + Feature Engineering temporal,2025,,,,0.2622,1
+Fase 4B,Validación multisemilla,Random Forest + Feature Engineering temporal,999,,,,0.2634,1

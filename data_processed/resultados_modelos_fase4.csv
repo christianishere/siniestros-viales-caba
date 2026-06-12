@@ -1,0 +1,5 @@
+fase,experimento,modelo,semilla,accuracy,precision,recall,f1_score,es_modelo_final
+Fase 4,Modelado inicial,Dummy Classifier,42,0.9895168641750228,0.0,0.0,0.0,0
+Fase 4,Modelado inicial,Logistic Regression,42,0.8676694013977514,0.057883131201764054,0.7608695652173914,0.10758196721311475,0
+Fase 4,Modelado inicial,Decision Tree,42,0.9797933758735946,0.10493827160493827,0.12318840579710146,0.11333333333333333,0
+Fase 4,Modelado inicial,Random Forest,42,0.9895168641750228,0.0,0.0,0.0,0
