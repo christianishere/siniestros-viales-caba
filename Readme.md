@@ -194,7 +194,8 @@ TP_SINIESTROS_VIALES/
 ├── data_raw/
 ├── database/
 ├── docs/
-│   └── index.html
+│   ├── index.html
+│   └── img
 ├── notebooks/
 │   ├── 01_exploracion_datasets.ipynb
 │   ├── 02_etl_dataset_modelado.ipynb
@@ -205,8 +206,7 @@ TP_SINIESTROS_VIALES/
 │
 ├── src/
 ├── README.md
-├── requirements.txt
-└── Bitacora_proyecto.md
+└── requirements.txt
 ```
 
 ---
